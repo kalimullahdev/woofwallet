@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "42232678383",
+    "project_id": "woof-wallet",
+    "storage_bucket": "woof-wallet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:42232678383:android:a5ec2777f9e48df053981a",
+        "android_client_info": {
+          "package_name": "com.kalimse.woofwallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "42232678383-6ild73dae1ortfb46hd3ofvc1en7rbbe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSeV93tMCL9hMgd-BYu9H2sRpPe1XO_nk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "42232678383-6ild73dae1ortfb46hd3ofvc1en7rbbe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

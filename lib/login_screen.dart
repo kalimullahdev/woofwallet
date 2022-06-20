@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:woofwallet/custom_validators.dart';
 import 'package:woofwallet/firebase_repo.dart';
 import 'package:woofwallet/home_screen.dart';
 import 'package:woofwallet/register_screen.dart';
@@ -158,12 +159,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       screenSize: screenSize,
                       hintText: 'Email',
                       svgSrc: 'icons/profile.svg',
+                      validator: (_) {
+                        return CustomValidator.validateEmail(
+                          _emailtextEditingController.text,
+                        );
+                      },
                     ),
                     CustomTextFormField(
                       controller: _passwordtextEditingController,
                       screenSize: screenSize,
                       hintText: 'Password',
                       svgSrc: 'icons/password.svg',
+                      validator: (_) {
+                        return CustomValidator.validatePassword(
+                          _passwordtextEditingController.text,
+                        );
+                      },
                       suffixIcon: const Icon(
                         FontAwesomeIcons.eyeSlash,
                         size: 18,
@@ -183,7 +194,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Processing Data')),
+                              const SnackBar(
+                                content: Text('Processing Data'),
+                                duration: Duration(milliseconds: 200),
+                              ),
                             );
                             try {
                               await FirebaseRepo.firebaseAuth
@@ -194,6 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text('Login success'),
+                                  duration: Duration(milliseconds: 1000),
                                 ),
                               );
 

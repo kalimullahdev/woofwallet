@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:woofwallet/custom_validators.dart';
 import 'package:woofwallet/firebase_repo.dart';
 import 'package:woofwallet/home_screen.dart';
 import 'package:woofwallet/login_screen.dart';
@@ -155,12 +156,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     screenSize: screenSize,
                     hintText: 'Username',
                     svgSrc: 'icons/profile.svg',
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
                   ),
 
                   CustomTextFormField(
@@ -168,6 +163,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     screenSize: screenSize,
                     hintText: 'Email',
                     svgSrc: 'icons/sms.svg',
+                    validator: (value) {
+                      return CustomValidator.validateEmail(
+                        _emailtextEditingController.text,
+                      );
+                    },
                   ),
                   CustomTextFormField(
                     screenSize: screenSize,
@@ -179,6 +179,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     screenSize: screenSize,
                     hintText: 'Password',
                     svgSrc: 'icons/password.svg',
+                    validator: (_) {
+                      return CustomValidator.validatePassword(
+                        _passwordtextEditingController.text,
+                      );
+                    },
                     suffixIcon: const Icon(
                       FontAwesomeIcons.eyeSlash,
                       size: 18,
@@ -193,7 +198,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Processing Data')),
+                            const SnackBar(
+                              content: Text('Processing Data'),
+                              duration: Duration(milliseconds: 200),
+                            ),
                           );
                           try {
                             await FirebaseRepo.firebaseAuth
@@ -204,6 +212,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Registration success'),
+                                duration: Duration(milliseconds: 1000),
                               ),
                             );
 
@@ -217,8 +226,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             if (e.code == 'weak-password') {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                    content: Text(
-                                        'The password provided is too weak')),
+                                  content:
+                                      Text('The password provided is too weak'),
+                                ),
                               );
                             } else if (e.code == 'email-already-in-use') {
                               ScaffoldMessenger.of(context).showSnackBar(
